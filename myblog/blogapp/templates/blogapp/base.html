@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <script src="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/js/medium-editor.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css" type="text/css"
+        media="screen" charset="utf-8">
+
+    <link rel="stylesheet" href="{% url static 'css/blogapp.css' %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bona+Nova&family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg techfont navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand bigbrand" href="{% url 'post_list' %}">MyBlog</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.github.com">GitHub</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.linkedin.com">LinkedIn</a>
+                    </li>
+                </ul>
+                <ul class='nav navbar-nav navbar-right'>
+                    {% if user.is_authenticated %}
+                    <li>
+                        <a href="{% url 'post_new' %}">New Post</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'post_draft_list' %}">Drafts</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'logout' %}">Logout</a>
+                    </li>
+                    <li>
+                        <a>{{user.username}}</a>
+                    </li>
+                    <li>
+                        {% else %}
+                        <li><a class='nav navbar-right' href="{% url 'login' %}"><span class='glyphicon glyphicon-user'></span></a></li>
+                    </li>
+                    {% endif %}
+                </ul>
+                
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="blog_posts">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
